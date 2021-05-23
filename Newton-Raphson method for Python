@@ -1,0 +1,31 @@
+# FOR RUN THIS CODE YOU MUST HAD INSTALLED THE SYMPY LIBRARY
+# AND TYPE IN COMMAND PROMPT "pip install sympy"
+
+from sympy import symbols, diff, sqrt
+
+x = symbols('x')
+# Input the function in the form f(x)=0
+# For example "sqrt(x) + 3 = 5": the function will be f = sqrt(x) + 3 - 5
+f = x**0.5 + 3 - 5
+
+p0 = 1  # This is the initial condition for iteration
+accuracy = 1e-15  #  The precision that you want to have in the result
+f_prime = diff(f, x)
+p = p0 - (f.subs(x, p0)/f_prime.subs(x, p0))
+error = abs(p-p0)
+n = 0
+
+print('        n                  p0                 p                error')
+print('')
+
+while error > accuracy:
+    n = n+1
+    p = p0 - (f.subs(x, p0) / f_prime.subs(x, p0))
+    error = abs(p-p0)
+    print('{0:.15f}  {1:.15f}  {2:.15f}  {3:.15f}'.format(n, float(p0), float(p), float(error)))
+    p0 = p
+
+print('')
+print(f'For the function {f} = 0')
+print('')
+print(f'The estimated value for x is: {float(p)}')
